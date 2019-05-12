@@ -1,17 +1,18 @@
 from sqlalchemy import Integer, Column, String, Float
+from sqlalchemy.orm import relationship
 
-from health_care.database import BaseModle, session
+from health_care.database import BaseModel, session
 from .mixins import CreationMixin
+from .location import Location
 
 
-class User(CreationMixin, BaseModle):
+class User(CreationMixin, BaseModel):
     __tablename__ = 'bot_user'
 
     id = Column(Integer, primary_key=True)
     peer_id = Column(String)
     access_hash = Column(String)
-    location_langitude = Column(Float)
-    location_latitude = Column(Float)
+    locations = relationship('Location')
 
     @classmethod
     def exists(cls, peer_id):

@@ -5,6 +5,6 @@ from sqlalchemy.orm import sessionmaker
 from ..config import BotConfig
 
 engine = create_engine(BotConfig.database_url)
-BaseModle = declarative_base(bind=engine)
+BaseModel = declarative_base(bind=engine)
 DBsession = sessionmaker(bind=engine)
 session = DBsession()
