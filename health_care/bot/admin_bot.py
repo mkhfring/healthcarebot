@@ -2,10 +2,8 @@ import asyncio
 
 from balebot.updater import Updater
 
-from .config import BotConfig
-from vip_admin.bot.controllers import RootController, OfficerScoreController, \
-    ServiceScoreController, WeakScoreController, CustomerController, \
-    OfficerSearchController
+from health_care.config import BotConfig
+from health_care.bot.controllers import RootController
 
 
 loop = asyncio.get_event_loop()
