@@ -5,12 +5,13 @@ from sqlalchemy.orm import sessionmaker
 
 from health_care.database.databasemanager import DatabaseManager
 from health_care.bot.models import Location, User
+from health_care.config import BotConfig
 
 
 class TestUser:
 
     def test_user(self):
-        with DatabaseManager() as dbmanager:
+        with DatabaseManager(url=BotConfig.database_test_url) as dbmanager:
             dbmanager.drop_schema()
             dbmanager.setup_schema()
             engine = dbmanager.engine

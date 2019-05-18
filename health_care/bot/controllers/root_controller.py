@@ -12,7 +12,6 @@ from health_care.config import BotConfig
 from health_care.utils import logger
 from ..constants import RegexPattern, ConstantMessage, ButtonMessage
 
-supported_users = BotConfig.supported_users
 
 
 class RootController:
@@ -74,18 +73,9 @@ class RootController:
             'user_id': user_peer.peer_id,
             'step': sys._getframe().f_code.co_name
         }
-        if user_peer.peer_id in supported_users:
-            bot.send_message(
-                message,
-                user_peer, success_callback=self.success_sending_message,
-                failure_callback=self.failure_send_message,
-                **kwargs
-            )
-        else:
-            bot.send_message(
-                TextMessage(ConstantMessage.not_registered_message),
-                user_peer,
-                success_callback=self.success_sending_message,
-                failure_callback=self.failure_send_message,
-                **kwargs
-            )
+        bot.send_message(
+            message,
+            user_peer, success_callback=self.success_sending_message,
+            failure_callback=self.failure_send_message,
+            **kwargs
+        )

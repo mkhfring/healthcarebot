@@ -37,6 +37,7 @@ class AbstractDatabaseManager(object):
 
     def setup_schema(self):
         BaseModel.metadata.create_all(self.engine)
+        self.engine.connect()
 
     def drop_schema(self):
         BaseModel.metadata.drop_all(self.engine)
@@ -71,7 +72,7 @@ class PostgresManager(AbstractDatabaseManager):
 class SqliteManager(AbstractDatabaseManager):
 
     def __init__(self, url):
-        super().__init__()
+        super().__init__(url)
         self.filename = self.db_url.replace('sqlite:///', '')
 
     def database_exists(self):

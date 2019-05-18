@@ -24,6 +24,6 @@ class Category(BaseModel):
     __tablename__ = 'category'
 
     id = Column(Integer, primary_key=True)
-    category_type = Column(Enum(CategoryEnum))
+    category_type = Column(Enum(CategoryEnum), unique=True)
     description = Column(String)
 

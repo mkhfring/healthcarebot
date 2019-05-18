@@ -1,9 +1,7 @@
 import argparse
 
-from  sqlalchemy import create_engine
-
 from ..bot.admin_bot import updater
-from vip_admin.config import BotConfig
+from ..bot.models.base_data import create_base_data
 
 
 def main():
@@ -17,5 +15,9 @@ def main():
     if args.starter == 'start':
         updater.run()
 
-
+    if args.starter == 'db':
+        try:
+            create_base_data()
+        except Exception as e:
+            print('Dublicate')
 

@@ -27,7 +27,7 @@ setup(
     packages=find_packages(),
     entry_points={
         'console_scripts': [
-            'health = heath_care.cli.starter:main'
+            'health = health_care.cli.starter:main'
         ]
     }
 )
