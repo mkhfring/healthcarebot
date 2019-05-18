@@ -8,9 +8,10 @@ from balebot.handlers import CommandHandler
 from balebot.handlers import MessageHandler
 from balebot.filters import TextFilter, TemplateResponseFilter
 
-from health_care.config import BotConfig
+from health_care.bot.models import User, Category
 from health_care.utils import logger
 from ..constants import RegexPattern, ConstantMessage, ButtonMessage
+from health_care.database import session
 
 
 
@@ -58,15 +59,20 @@ class RootController:
         self.dispatcher.clear_conversation_data(update=update)
 
         user_peer = update.get_effective_user()
+        if not User.exists(user_peer.peer_id):
+            session.add(
+                User(
+                    peer_id=user_peer.peer_id,
+                    access_hash=user_peer.access_hash
+                )
+            )
+            session.commit()
+
+        categories = session.query(Category).all()
+        category_list = [TemplateMessageButton(category.description) for category in categories]
         message = TemplateMessage(
             TextMessage(ConstantMessage.menu_message),
-            [
-                TemplateMessageButton(ButtonMessage.service_report_message),
-                TemplateMessageButton(ButtonMessage.officer_score_message),
-                TemplateMessageButton(ButtonMessage.weak_score_report_message),
-                TemplateMessageButton(ButtonMessage.customer_search_message),
-                TemplateMessageButton(ButtonMessage.officer_search_message),
-            ]
+            category_list
         )
         kwargs = {
             'update': update,
