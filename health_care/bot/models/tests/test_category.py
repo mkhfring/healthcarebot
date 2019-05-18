@@ -1,7 +1,7 @@
 from sqlalchemy.orm import sessionmaker
 
 from health_care.database.databasemanager import DatabaseManager
-from health_care.bot.models import Category, CategoryEnum
+from health_care.bot.models import Category, CategoryEnum, Service
 from health_care.config import BotConfig
 
 
@@ -15,11 +15,15 @@ class TestCategory:
 
         Session = sessionmaker(bind=engine)
         session = Session()
-        new_born = Category(
-            category_type=CategoryEnum.NEWBORN,
+        service = Service(
+            description='درخواست و بررسی وضعیت مادر و جنین'
+        )
+        pregnant = Category(
+            category_type=CategoryEnum.PREGNANT,
             description='گروه سنی ۱ روز تا ۲ ماه',
+            services=[service]
 
         )
-        session.add(new_born)
+        session.add(pregnant)
         session.commit()
         assert 1 == 1

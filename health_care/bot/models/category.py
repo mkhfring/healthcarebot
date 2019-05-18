@@ -3,9 +3,7 @@ import enum
 from sqlalchemy import Integer, Column, Enum, String
 from sqlalchemy.orm import relationship
 
-from health_care.database import BaseModel, session
-from .mixins import CreationMixin
-from .location import Location
+from health_care.database import BaseModel
 
 
 class CategoryEnum(enum.Enum):
@@ -26,4 +24,5 @@ class Category(BaseModel):
     id = Column(Integer, primary_key=True)
     category_type = Column(Enum(CategoryEnum), unique=True)
     description = Column(String)
+    services = relationship("Service")
 
