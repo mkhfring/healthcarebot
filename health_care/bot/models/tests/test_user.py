@@ -4,13 +4,12 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from health_care.database.databasemanager import DatabaseManager
-from health_care.bot.models.user import User
-from health_care.bot.models.location import Location
+from health_care.bot.models import Location, User
 
 
-class TestGetAndWriteStatementData:
+class TestUser:
 
-    def test_get_and_write_statement_data(self):
+    def test_user(self):
         with DatabaseManager() as dbmanager:
             dbmanager.drop_schema()
             dbmanager.setup_schema()
@@ -23,9 +22,8 @@ class TestGetAndWriteStatementData:
         user = User(
             peer_id='12334',
             access_hash='12345',
-            created_at=datetime.datetime.now(),
             locations=[location]
         )
         session.add(user)
-        session.flush()
+        session.commit()
         assert 1 == 1
